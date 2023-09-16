@@ -2,21 +2,21 @@ import numpy as np
 from matplotlib import pyplot
 from parametres import NB_COLONNES, NB_LIGNES
 
-class Game : 
-    def __init__(self, plateau):
-
-
 class Plateau: 
     """
     Classe qui représente le plateau du jeu Puissance 4
     """
     def __init__(self, nb_colonnes, nb_lignes):
-        self.plateau = np.zeros(NB_LIGNES, NB_COLONNES)
-        self.nb_colonnes = NB_COLONNES
-        self.nb_lignes = NB_LIGNES
+        self.plateau = np.zeros((nb_lignes, nb_colonnes), dtype=int)
+        self.nb_colonnes = nb_colonnes
+        self.nb_lignes = nb_lignes
     
     def reset(self):
         self.plateau = np.zeros(NB_LIGNES, NB_COLONNES)
+
+    def is_full(self) :
+        """"Renvoie True si le plateau est complet, false sinon"""
+        return np.all(self.plateau != 0)
 
 class Player:
 
@@ -69,4 +69,3 @@ def quadruplets_possibles(x, y, puissance) :
     quadruplets_colonnes(x,y,puissance,my_list)
     quadruplets_diagonales_droit(x,y,puissance,my_list)
     quadruplets_diagonales_gauche(x,y,puissance,my_list)
-    #print(my_list)
