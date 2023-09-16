@@ -2,14 +2,27 @@ import numpy as np
 from matplotlib import pyplot
 from parametres import NB_COLONNES, NB_LIGNES
 
-class Plateau : 
+class Game : 
+    def __init__(self, plateau):
+
+
+class Plateau: 
     """
     Classe qui représente le plateau du jeu Puissance 4
     """
-
     def __init__(self, nb_colonnes, nb_lignes):
+        self.plateau = np.zeros(NB_LIGNES, NB_COLONNES)
         self.nb_colonnes = NB_COLONNES
         self.nb_lignes = NB_LIGNES
+    
+    def reset(self):
+        self.plateau = np.zeros(NB_LIGNES, NB_COLONNES)
+
+class Player:
+
+    def __init__(self, id):
+        self.id = id
+    
 
            
 def quadruplets_lignes(x, y, puissance, my_list):
@@ -19,6 +32,7 @@ def quadruplets_lignes(x, y, puissance, my_list):
             for i in range(j, j + puissance):
                 quadruple.add((k, i))
             my_list.append(quadruple)
+            print(quadruple)
 
 def quadruplets_colonnes(x, y, puissance, my_list):
     for j in range(y) :
@@ -27,6 +41,7 @@ def quadruplets_colonnes(x, y, puissance, my_list):
             for i in range(k, k + puissance):
                 quadruple.add((i, j))
             my_list.append(quadruple)
+            print(quadruple)
         
 def quadruplets_diagonales_droit(x, y, puissance, my_list) :
     for i in range(x) :
@@ -36,6 +51,7 @@ def quadruplets_diagonales_droit(x, y, puissance, my_list) :
                 for l in range(4) :
                     quadruple.add((i+l ,j + l))
                 my_list.append(quadruple)
+                print(quadruple)
 
 def quadruplets_diagonales_gauche(x, y, puissance, my_list):
     for i in range(x):
@@ -53,4 +69,4 @@ def quadruplets_possibles(x, y, puissance) :
     quadruplets_colonnes(x,y,puissance,my_list)
     quadruplets_diagonales_droit(x,y,puissance,my_list)
     quadruplets_diagonales_gauche(x,y,puissance,my_list)
-    print(my_list)
+    #print(my_list)
