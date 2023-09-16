@@ -1,28 +1,47 @@
 import numpy as np
+import pandas as pd
 from matplotlib import pyplot
-from parametres import NB_COLONNES, NB_LIGNES
-
+from parametres import *
+"""
 class Game : 
     def __init__(self, plateau):
-
+        self.plateau = plateau
+    
+    def 
+"""
 
 class Plateau: 
     """
     Classe qui représente le plateau du jeu Puissance 4
     """
     def __init__(self, nb_colonnes, nb_lignes):
-        self.plateau = np.zeros(NB_LIGNES, NB_COLONNES)
+        self.plateau = np.zeros((NB_LIGNES, NB_COLONNES))
         self.nb_colonnes = NB_COLONNES
         self.nb_lignes = NB_LIGNES
     
     def reset(self):
         self.plateau = np.zeros(NB_LIGNES, NB_COLONNES)
+    
+    def show(self):
+        data = self.plateau
+        df = pd.DataFrame(data)
+        print(df)
+
+    def play(self, x, joueur):
+        if x > -1 and x < 7:
+            print((self.plateau[x, :]==0).argmax())
+            y = NB_LIGNES - 1 - (self.plateau[x, :]==0).argmax()
+            if y < self.plateau.shape[0]: #s'il y'a une ligne disponible
+                self.plateau[y][x] = joueur.id
+        else:
+            print("out of borders")
 
 class Player:
 
     def __init__(self, id):
         self.id = id
-    
+
+
 
            
 def quadruplets_lignes(x, y, puissance, my_list):
