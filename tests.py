@@ -1,7 +1,7 @@
 from partie1 import *
 from parametres import * 
 
-quadruplets_possibles(NB_LIGNES, NB_COLONNES, PUISSANCE)
+quad_list(NB_LIGNES, NB_COLONNES, PUISSANCE)
 
 """
 plateau1 = Plateau(NB_LIGNES, NB_COLONNES)

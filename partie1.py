@@ -57,34 +57,3 @@ class Player:
         player_input = input("Choisir un entier pour la colonne choisie: ")
         plateau.play(player_input,self)
           
-def quadruplets_colonnes(x, y, puissance, my_list):
-    for i in range(x) :
-        for j in range(y - puissance + 1):
-            my_list.append(((j,i),(j,i+1),(j,i+2),(j,i+3)))
-
-def quadruplets_lignes(x, y, puissance, my_list):
-    for j in range(y) :
-        for i in range(x - puissance + 1):  
-            my_list.append(((i,j),(i+1,j),(i+2,j),(i+3,j)))
-            
-        
-def quadruplets_diagonales_droit(x, y, puissance, my_list) :
-    for i in range(x) :
-        for j in range(y):
-            if j+puissance <= y  and i+puissance<= x :
-                my_list.append(((i,j),(i+1,j+1),(i+2,j+2),(j+3,j+3)))
-
-def quadruplets_diagonales_gauche(x, y, puissance, my_list):
-    for i in range(x):
-        for j in range(y):
-            if j - puissance >= -1 and i + puissance <= x:
-                    my_list.append(((i,j),(i+1,j-1),(i+2,j-2),(j+3,j-3)))
-    
-def quadruplets_possibles(x, y, puissance) :
-    my_list=[]
-    quadruplets_lignes(x,y,puissance,my_list)
-    quadruplets_colonnes(x,y,puissance,my_list)
-    quadruplets_diagonales_droit(x,y,puissance,my_list)
-    quadruplets_diagonales_gauche(x,y,puissance,my_list)
-    for item in my_list:
-        print(item)
