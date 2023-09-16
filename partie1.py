@@ -15,7 +15,8 @@ class Plateau:
     Classe qui représente le plateau du jeu Puissance 4
     """
     def __init__(self, nb_colonnes, nb_lignes):
-        self.plateau = np.zeros((NB_LIGNES, NB_COLONNES))
+        self.plateau = np.zeros((NB_LIGNES, NB_COLONNES), dtype=int)
+        self.filled_cases = np.zeros(NB_COLONNES, dtype=int)
         self.nb_colonnes = NB_COLONNES
         self.nb_lignes = NB_LIGNES
     
@@ -23,18 +24,25 @@ class Plateau:
         self.plateau = np.zeros(NB_LIGNES, NB_COLONNES)
     
     def show(self):
+        """ Affiche le tableau de dimensions nb_lignes  x nb_colonnes"""
         data = self.plateau
         df = pd.DataFrame(data)
         print(df)
+    
+    def is_full(self) :
+        """"Renvoie True si le plateau est complet, false sinon"""
+        return np.all(self.plateau != 0)
 
     def play(self, x, joueur):
-        if x > -1 and x < 7:
-            print((self.plateau[x, :]==0).argmax())
-            y = NB_LIGNES - 1 - (self.plateau[x, :]==0).argmax()
-            if y < self.plateau.shape[0]: #s'il y'a une ligne disponible
-                self.plateau[y][x] = joueur.id
+        if self.filled_cases[x] < 6:
+            if x > -1 and x < 7:
+                y = (NB_LIGNES - 1) - self.filled_cases[x]
+                self.filled_cases[x] += 1
+                self.plateau[y,x] = joueur.id
+            else:
+                print("out of borders")
         else:
-            print("out of borders")
+            print("filled row for row n°:", x)
 
 class Player:
 
