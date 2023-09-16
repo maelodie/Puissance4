@@ -29,5 +29,4 @@ def quad_list(x, y, puissance) :
     quadruplets_lignes(x,y,puissance,my_list)
     quadruplets_colonnes(x,y,puissance,my_list)
     quadruplets_diagonales(x,y,puissance,my_list)
-    for item in my_list:
-        print(item)
+    return my_list

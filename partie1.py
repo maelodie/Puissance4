@@ -14,11 +14,17 @@ class Plateau:
     """
     Classe qui représente le plateau du jeu Puissance 4
     """
+
+    #Attributs statiques
+    w_combos = quad_list(NB_LIGNES, NB_COLONNES, PUISSANCE)
+    
     def __init__(self, nb_colonnes, nb_lignes):
+        #Attributs de classe
         self.plateau = np.zeros((NB_LIGNES, NB_COLONNES), dtype=int)
         self.filled_cases = np.zeros(NB_COLONNES, dtype=int)
         self.nb_colonnes = NB_COLONNES
         self.nb_lignes = NB_LIGNES
+
     
     def reset(self):
         self.plateau = np.zeros(NB_LIGNES, NB_COLONNES)
@@ -43,6 +49,14 @@ class Plateau:
                 print("out of borders")
         else:
             print("filled row for row n°:", x)
+    
+    def has_won(self):
+        combo = []
+        for quad in self.w_combos:
+            combo = [self.plateau[y][x] for x,y in quad]
+            if all(item == ID_JOUEUR1 for item in combo) or all(item == ID_JOUEUR1 for item in combo):
+                return True
+        return False
 
 class Player:
     def __init__(self, id):
