@@ -47,5 +47,10 @@ def quadruplets_diagonales_gauche(x, y, puissance, my_list):
                 my_list.append(quadruple)
                 print(quadruple)
     
-my_list=[]
-quadruplets_diagonales_gauche(NB_LIGNES,NB_COLONNES,4,my_list)
+def quadruplets_possibles(x, y, puissance) :
+    my_list=[]
+    quadruplets_lignes(x,y,puissance,my_list)
+    quadruplets_colonnes(x,y,puissance,my_list)
+    quadruplets_diagonales_droit(x,y,puissance,my_list)
+    quadruplets_diagonales_gauche(x,y,puissance,my_list)
+    print(my_list)
