@@ -1,6 +1,6 @@
 import numpy as np
 from matplotlib import pyplot
-from Parametres import NB_COLONNES, NB_LIGNES
+from Parametres import NB_COLONNES, NB_LIGNES, PUISSANCE
 
 class Plateau : 
     """
@@ -45,7 +45,12 @@ def quadruplets_diagonales_gauche(x, y, puissance, my_list):
                 for l in range(4):
                     quadruple.append((i + l, j - l))
                 my_list.append(quadruple)
-                print(quadruple)
-    
-my_list=[]
-quadruplets_diagonales_gauche(NB_LIGNES,NB_COLONNES,4,my_list)
+
+def quadruplets_possibles(x, y, puissance) :
+    my_list=[]
+    quadruplets_lignes(x,y,puissance,my_list)
+    quadruplets_colonnes(x,y,puissance,my_list)
+    quadruplets_diagonales_droit(x,y,puissance,my_list)
+    quadruplets_diagonales_gauche(x,y,puissance,my_list)
+    print(my_list)
+
