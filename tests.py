@@ -5,4 +5,5 @@ from parametres import *
 
 plateau=Plateau(NB_COLONNES,NB_LIGNES)
 isFull= plateau.is_full()
-print(isFull)
+print("Is the plateau full ? ", isFull)
+#plateau.show()

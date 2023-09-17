@@ -7,6 +7,7 @@ class Game :
         self.joueur1 = Player(ID_JOUEUR1)
         self.joueur2 = Player(ID_JOUEUR2)
         self.running = True 
+        self.tour = 1
 
 
     def is_finished(self) :
