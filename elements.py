@@ -39,14 +39,14 @@ class Plateau:
                 self.filled_cases[x] += 1
                 self.plateau[y,x] = joueur.id
             else:
-                print("Column out of bound")
+                print("Column out of bounds")
         else:
             print("Column ", x, " is already full")
 
     def has_won(self):
         combo = []
         for quad in self.w_combos:
-            combo = [self.plateau[y][x] for x,y in quad]
+            combo = [self.plateau[x][y] for x,y in quad]
             if all(item == ID_JOUEUR1 for item in combo) :
                 print("Le Joueur 1 a gagné")
                 return True
@@ -64,7 +64,7 @@ class Player:
         """
         Renvoie le coup à jouer pour le joueur
         Si mode vaut 0, l'utilisateur saisie le colonne souhaitée via la ligne de commande
-        Si mode vaut 1, on génere une commande aléatoire
+        Si mode vaut 1, on génere une colonne aléatoire
         """
         if self.id == ID_JOUEUR1:
             print("C'est le tour du Joueur 1")
@@ -76,6 +76,6 @@ class Player:
             print("Le coup à jouer est la colonne ", int(player_input))
             plateau.play(int(player_input),self)
         if mode==1 :
-            player_input = random.randint(0, plateau.NB_COLONNES - 1)
+            player_input = random.randint(0, plateau.nb_colonnes - 1)
             print("Le coup à jouer est la colonne ", player_input)
             plateau.play(player_input,self)

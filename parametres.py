@@ -48,3 +48,4 @@ def quad_list(x, y, puissance) :
     quadruplets_colonnes(x,y,puissance,my_list)
     quadruplets_diagonales_droit(x,y,puissance,my_list)
     quadruplets_diagonales_gauche(x,y,puissance,my_list)
+    return my_list

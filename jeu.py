@@ -9,11 +9,29 @@ class Game :
         self.running = True 
         self.tour = 1
 
+    def run(self, mode) : 
+        """
+        Permet de jouer une partie entre le joueur 1 et le joueur 2 : ils jouent à tour de rôle tant que la partie n'est pas finie.
+        Elle renvoie 1 ou -1 selon la victoire du joueur 1 ou 2, et 0 en cas de nul.
+        Si mode vaut 0, l'utilisateur saisie le colonne souhaitée du prochain coup via la ligne de commande
+        Si mode vaut 1, on génere une colonne aléatoire
+        """
+        while self.running :
+            if self.tour == 1 :
+                self.joueur1.play(self.plateau, mode)
+                self.tour = 2
+            if self.tour == 2 :
+                self.joueur2.play(self.plateau, mode)
+                self.running = 1
+            self.is_finished()
 
     def is_finished(self) :
-        if self.joueur1.has_won() or self.joueur2.has_won() or self.plateau.is_full():
-            self.running=True
+        if self.plateau.has_won() or self.plateau.has_won() :
+            self.running = False
+        if self.plateau.is_full() :
+            print("Le plateau est complet ! ")
+            self.running = False
 
-#Avec ce constructeur, pour la fonction run, on fait while self.running et on appelle la focntion is_finished a la fin de la boucle pour la mise a jour de la condition
+
         
 
