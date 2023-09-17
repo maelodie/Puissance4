@@ -8,6 +8,7 @@ class Game :
         self.joueur2 = Player(ID_JOUEUR2)
         self.running = True 
         self.tour = 1
+        self.end = 0
 
     def run(self, mode) : 
         """
@@ -22,12 +23,15 @@ class Game :
                 self.tour = 2
             if self.tour == 2 :
                 self.joueur2.play(self.plateau, mode)
-                self.running = 1
+                self.tour = 1
             self.is_finished()
+        return self.end
 
     def is_finished(self) :
-        if self.plateau.has_won() or self.plateau.has_won() :
+        has_won = self.plateau.has_won()
+        if has_won[0] :
             self.running = False
+            self.end = has_won[1]
         if self.plateau.is_full() :
             print("Le plateau est complet ! ")
             self.running = False

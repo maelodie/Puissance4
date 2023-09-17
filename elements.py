@@ -49,11 +49,11 @@ class Plateau:
             combo = [self.plateau[x][y] for x,y in quad]
             if all(item == ID_JOUEUR1 for item in combo) :
                 print("Le Joueur 1 a gagné")
-                return True
+                return (True, 1)
             if all(item == ID_JOUEUR1 for item in combo):
                 print("Le Joueur 2 a gagné")
-                return True
-        return False
+                return (True, -1)
+        return (False, 0)
 
 class Player:
 
