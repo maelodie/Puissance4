@@ -26,6 +26,7 @@ class Plateau:
         """ Affiche le tableau de dimensions nb_lignes  x nb_colonnes"""
         data = self.plateau
         df = pd.DataFrame(data)
+        print("Voici un visuel du plateau")
         print(df)
 
     def is_full(self) :
@@ -50,7 +51,7 @@ class Plateau:
             if all(item == ID_JOUEUR1 for item in combo) :
                 print("Le Joueur 1 a gagné")
                 return (True, 1)
-            if all(item == ID_JOUEUR1 for item in combo):
+            if all(item == ID_JOUEUR2 for item in combo):
                 print("Le Joueur 2 a gagné")
                 return (True, -1)
         return (False, 0)

@@ -4,7 +4,7 @@ PUISSANCE = 4
 ID_JOUEUR1 = 1
 ID_JOUEUR2 = -1
 
-def quadruplets_lignes(x, y, puissance, my_list):
+def quadruplets_colonnes(x, y, puissance, my_list):
     for k in range(x) :
         for j in range(y - puissance + 1):  
             quadruple = set()
@@ -13,7 +13,7 @@ def quadruplets_lignes(x, y, puissance, my_list):
             my_list.append(quadruple)
             print(quadruple)
 
-def quadruplets_colonnes(x, y, puissance, my_list):
+def quadruplets_lignes(x, y, puissance, my_list):
     for j in range(y) :
         for k in range(x - puissance + 1):  
             quadruple = set()

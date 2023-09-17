@@ -1,4 +1,4 @@
-from parametres import NB_COLONNES, NB_LIGNES, ID_JOUEUR1, ID_JOUEUR2
+from parametres import NB_COLONNES, NB_LIGNES, ID_JOUEUR1, ID_JOUEUR2, PUISSANCE, quad_list
 from elements import Plateau, Player 
 
 class Game : 
@@ -21,10 +21,15 @@ class Game :
             if self.tour == 1 :
                 self.joueur1.play(self.plateau, mode)
                 self.tour = 2
+                if self.is_finished():
+                    break
+
             if self.tour == 2 :
                 self.joueur2.play(self.plateau, mode)
                 self.tour = 1
-            self.is_finished()
+                if self.is_finished():
+                    break
+
         return self.end
 
     def is_finished(self) :
@@ -32,9 +37,11 @@ class Game :
         if has_won[0] :
             self.running = False
             self.end = has_won[1]
+            return True
         if self.plateau.is_full() :
             print("Le plateau est complet ! ")
             self.running = False
+            return True
 
 
         
