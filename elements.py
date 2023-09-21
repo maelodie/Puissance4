@@ -2,8 +2,7 @@ import numpy as np
 import pandas as pd
 import random
 from matplotlib import pyplot
-from parametres import NB_COLONNES, NB_LIGNES, PUISSANCE, ID_JOUEUR1, ID_JOUEUR2
-from quad import quad_list
+from parametres import *
 
 class Plateau: 
     """
@@ -11,7 +10,7 @@ class Plateau:
     """
 
     #Attributs statiques
-    w_combos = quad_list(NB_COLONNES, NB_LIGNES, PUISSANCE)
+    w_combos = quad_list(NB_LIGNES, NB_COLONNES, PUISSANCE)
 
     def __init__(self, nb_colonnes, nb_lignes):
         #Attributs de classe
@@ -21,7 +20,7 @@ class Plateau:
         self.nb_lignes = nb_lignes
     
     def reset(self):
-        self.plateau = np.zeros(NB_COLONNES, NB_LIGNES)
+        self.plateau = np.zeros(NB_LIGNES, NB_COLONNES)
     
     def show(self):
         """ Affiche le tableau de dimensions nb_lignes  x nb_colonnes"""
@@ -74,12 +73,10 @@ class Player:
             print("C'est le tour du Joueur 2")
 
         if mode == 0 :
-            plateau.show()
             player_input = input("Choisir un entier pour la colonne choisie: ")
             print("Le coup à jouer est la colonne ", int(player_input))
             plateau.play(int(player_input),self)
         if mode==1 :
-            plateau.show()
             player_input = random.randint(0, plateau.nb_colonnes - 1)
             print("Le coup à jouer est la colonne ", player_input)
             plateau.play(player_input,self)

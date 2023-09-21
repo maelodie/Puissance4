@@ -1,6 +1,5 @@
-from parametres import NB_COLONNES, NB_LIGNES, ID_JOUEUR1, ID_JOUEUR2, PUISSANCE
+from parametres import NB_COLONNES, NB_LIGNES, ID_JOUEUR1, ID_JOUEUR2, PUISSANCE, quad_list
 from elements import Plateau, Player 
-from quad import quad_list
 
 class Game : 
     def __init__(self):
@@ -43,3 +42,7 @@ class Game :
             print("Le plateau est complet ! ")
             self.running = False
             return True
+
+
+        
+
