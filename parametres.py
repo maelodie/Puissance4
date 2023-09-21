@@ -11,7 +11,6 @@ def quadruplets_colonnes(x, y, puissance, my_list):
             for i in range(j, j + puissance):
                 quadruple.add((k, i))
             my_list.append(quadruple)
-            print(quadruple)
 
 def quadruplets_lignes(x, y, puissance, my_list):
     for j in range(y) :
@@ -20,7 +19,6 @@ def quadruplets_lignes(x, y, puissance, my_list):
             for i in range(k, k + puissance):
                 quadruple.add((i, j))
             my_list.append(quadruple)
-            print(quadruple)
         
 def quadruplets_diagonales_droit(x, y, puissance, my_list) :
     for i in range(x) :
@@ -30,7 +28,6 @@ def quadruplets_diagonales_droit(x, y, puissance, my_list) :
                 for l in range(4) :
                     quadruple.add((i+l ,j + l))
                 my_list.append(quadruple)
-                print(quadruple)
 
 def quadruplets_diagonales_gauche(x, y, puissance, my_list):
     for i in range(x):
@@ -40,7 +37,6 @@ def quadruplets_diagonales_gauche(x, y, puissance, my_list):
                 for l in range(4):
                     quadruple.add((i + l, j - l))
                 my_list.append(quadruple)
-                print(quadruple)
     
 def quad_list(x, y, puissance) :
     my_list=[]

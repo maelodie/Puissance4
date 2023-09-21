@@ -18,6 +18,7 @@ class Plateau:
         self.filled_cases = np.zeros(NB_COLONNES, dtype=int)
         self.nb_colonnes = nb_colonnes
         self.nb_lignes = nb_lignes
+        self.possible_actions = [0,1,2,3,4,5,6]
     
     def reset(self):
         self.plateau = np.zeros(NB_LIGNES, NB_COLONNES)
@@ -34,15 +35,13 @@ class Plateau:
         return np.all(self.plateau != 0)
     
     def play(self, x, joueur):
-        if self.filled_cases[x] < 6:
-            if x > -1 and x < 7:
-                y = (NB_LIGNES - 1) - self.filled_cases[x]
-                self.filled_cases[x] += 1
-                self.plateau[y,x] = joueur.id
-            else:
-                print("Column out of bounds")
-        else:
-            print("Column ", x, " is already full")
+        y = (NB_LIGNES - 1) - self.filled_cases[x]
+        self.filled_cases[x] += 1
+        self.plateau[y,x] = joueur.id
+
+        if self.filled_cases[x]>=self.nb_lignes :
+            self.possible_actions.remove(x)
+        
 
     def has_won(self):
         combo = []
@@ -77,6 +76,6 @@ class Player:
             print("Le coup à jouer est la colonne ", int(player_input))
             plateau.play(int(player_input),self)
         if mode==1 :
-            player_input = random.randint(0, plateau.nb_colonnes - 1)
+            player_input = random.choice(plateau.possible_actions)
             print("Le coup à jouer est la colonne ", player_input)
             plateau.play(player_input,self)
