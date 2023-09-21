@@ -1,8 +1,8 @@
 import numpy as np
 import pandas as pd
-import random
 from matplotlib import pyplot
 from parametres import *
+from player import Player
 
 class Plateau: 
     """
@@ -18,6 +18,9 @@ class Plateau:
         self.filled_cases = np.zeros(NB_COLONNES, dtype=int)
         self.nb_colonnes = nb_colonnes
         self.nb_lignes = nb_lignes
+        self.running = True 
+        self.tour = 1
+        self.end = 0
         self.possible_actions = [0,1,2,3,4,5,6]
     
     def reset(self):
@@ -42,7 +45,6 @@ class Plateau:
         if self.filled_cases[x]>=self.nb_lignes :
             self.possible_actions.remove(x)
         
-
     def has_won(self):
         combo = []
         for quad in self.w_combos:
@@ -54,28 +56,37 @@ class Plateau:
                 print("Le Joueur 2 a gagné")
                 return (True, -1)
         return (False, 0)
-
-class Player:
-
-    def __init__(self, id):
-        self.id = id
     
-    def play(self, plateau : Plateau, mode):
+    def run(self, joueur1 : Player , joueur2 : Player) : 
         """
-        Renvoie le coup à jouer pour le joueur
-        Si mode vaut 0, l'utilisateur saisie le colonne souhaitée via la ligne de commande
+        Permet de jouer une partie entre le joueur 1 et le joueur 2 : ils jouent à tour de rôle tant que la partie n'est pas finie.
+        Elle renvoie 1 ou -1 selon la victoire du joueur 1 ou 2, et 0 en cas de nul.
+        Si mode vaut 0, l'utilisateur saisie le colonne souhaitée du prochain coup via la ligne de commande
         Si mode vaut 1, on génere une colonne aléatoire
         """
-        if self.id == ID_JOUEUR1:
-            print("C'est le tour du Joueur 1")
-        elif self.id == ID_JOUEUR2:
-            print("C'est le tour du Joueur 2")
+        while self.running :
+            if self.tour == 1 :
+                joueur1.play(self.plateau, mode)
+                self.tour = 2
+                if self.is_finished():
+                    break
 
-        if mode == 0 :
-            player_input = input("Choisir un entier pour la colonne choisie: ")
-            print("Le coup à jouer est la colonne ", int(player_input))
-            plateau.play(int(player_input),self)
-        if mode==1 :
-            player_input = random.choice(plateau.possible_actions)
-            print("Le coup à jouer est la colonne ", player_input)
-            plateau.play(player_input,self)
+            if self.tour == 2 :
+                joueur2.play(self.plateau, mode)
+                self.tour = 1
+                if self.is_finished():
+                    break
+
+        return self.end
+
+    def is_finished(self) :
+        has_won = self.plateau.has_won()
+        if has_won[0] :
+            self.running = False
+            self.end = has_won[1]
+            return True
+        if self.plateau.is_full() :
+            print("Le plateau est complet ! ")
+            self.running = False
+            return True
+

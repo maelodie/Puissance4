@@ -1,4 +1,4 @@
-from elements import *
+from plateau import *
 from parametres import * 
 
 #quadruplets_possibles(NB_LIGNES, NB_COLONNES, PUISSANCE)
