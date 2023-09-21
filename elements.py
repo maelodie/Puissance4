@@ -58,8 +58,9 @@ class Plateau:
 
 class Player:
 
-    def __init__(self, id):
+    def __init__(self, id, jetons):
         self.id = id
+        self.jetons = jetons
     
     def play(self, plateau : Plateau, mode):
         """
@@ -67,6 +68,7 @@ class Player:
         Si mode vaut 0, l'utilisateur saisie le colonne souhaitée via la ligne de commande
         Si mode vaut 1, on génere une colonne aléatoire
         """
+        self.jetons -= 1
         if self.id == ID_JOUEUR1:
             print("C'est le tour du Joueur 1")
         elif self.id == ID_JOUEUR2:

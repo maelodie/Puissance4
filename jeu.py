@@ -1,11 +1,11 @@
-from parametres import NB_COLONNES, NB_LIGNES, ID_JOUEUR1, ID_JOUEUR2, PUISSANCE, quad_list
+from parametres import NB_COLONNES, NB_LIGNES, ID_JOUEUR1, ID_JOUEUR2, PUISSANCE, NB_JETONS, quad_list
 from elements import Plateau, Player 
 
 class Game : 
     def __init__(self):
         self.plateau = Plateau(NB_COLONNES, NB_LIGNES)
-        self.joueur1 = Player(ID_JOUEUR1)
-        self.joueur2 = Player(ID_JOUEUR2)
+        self.joueur1 = Player(ID_JOUEUR1, NB_JETONS)
+        self.joueur2 = Player(ID_JOUEUR2, NB_JETONS)
         self.running = True 
         self.tour = 1
         self.end = 0
