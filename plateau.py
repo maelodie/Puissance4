@@ -2,7 +2,6 @@ import numpy as np
 import pandas as pd
 from matplotlib import pyplot
 from parametres import *
-from player import Player
 
 class Plateau: 
     """
@@ -50,14 +49,14 @@ class Plateau:
         for quad in self.w_combos:
             combo = [self.plateau[x][y] for x,y in quad]
             if all(item == ID_JOUEUR1 for item in combo) :
-                print("Le Joueur 1 a gagné")
+                #print("Le Joueur 1 a gagné")
                 return (True, 1)
             if all(item == ID_JOUEUR2 for item in combo):
-                print("Le Joueur 2 a gagné")
+                #print("Le Joueur 2 a gagné")
                 return (True, -1)
         return (False, 0)
     
-    def run(self, joueur1 : Player , joueur2 : Player) : 
+    def run(self, joueur1, joueur2) : 
         """
         Permet de jouer une partie entre le joueur 1 et le joueur 2 : ils jouent à tour de rôle tant que la partie n'est pas finie.
         Elle renvoie 1 ou -1 selon la victoire du joueur 1 ou 2, et 0 en cas de nul.
@@ -66,13 +65,13 @@ class Plateau:
         """
         while self.running :
             if self.tour == 1 :
-                joueur1.play(self.plateau, mode)
-                self.tour = 2
+                joueur1.play(self)
+                self.tour = -1
                 if self.is_finished():
                     break
 
-            if self.tour == 2 :
-                joueur2.play(self.plateau, mode)
+            if self.tour == -1 :
+                joueur2.play(self)
                 self.tour = 1
                 if self.is_finished():
                     break
@@ -80,13 +79,13 @@ class Plateau:
         return self.end
 
     def is_finished(self) :
-        has_won = self.plateau.has_won()
+        has_won = self.has_won()
         if has_won[0] :
             self.running = False
             self.end = has_won[1]
             return True
-        if self.plateau.is_full() :
-            print("Le plateau est complet ! ")
+        if self.is_full() :
+            #print("Le plateau est complet ! ")
             self.running = False
             return True
 
