@@ -1,6 +1,12 @@
-from jeu import *
+from plateau import *
+from player import *
 
-jeu =  Game()
+joueur1 = Player(ID_JOUEUR1, 0) #joue aléatoirement
+joueur2 = Player(ID_JOUEUR2, 1) #joue MC
 
-#coup aléatoire , donc mode = 1
-print("return of run : ", jeu.run(1))
+plateau = Plateau(NB_COLONNES, NB_LIGNES) 
+
+plateau.run(joueur1, joueur2)
+
+print(plateau.show())
+print(plateau.has_won())

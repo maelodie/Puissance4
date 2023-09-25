@@ -1,13 +1,2 @@
 - Améliorer la complexité de la fonction quadruplets_possibles en réduisant 
 le nombre de boucles utilisées et en compactant la fonction
-
-- Deux implémentatiosn possibles pour les jetons: créer une nouvelle
-méthode pour vérifier le nombre de jetons ou changer la méthode is_full 
-pour dire que le jeu est plein si les deux joueurs ne possèdent plus de jetons
-
-- note: la méthode is_full actuelle est dans plateau. Cette classe n'a
-pas d'accès sur les joueurs. On doit choisir de soit supprimer is_full et créer une autre
-condition dans Game ou garder les deux (mais ça fait 2 fcts qui font la meme chose)
-
-Dans les deux cas: 
-return joueur1.jetons == 0 && joueur2.jetons == 1
