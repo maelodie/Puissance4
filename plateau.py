@@ -21,9 +21,10 @@ class Plateau:
         self.tour = 1
         self.end = 0
         self.possible_actions = [0,1,2,3,4,5,6]
+        self.nb_coups = 0
     
     def reset(self):
-        self.plateau = np.zeros(NB_LIGNES, NB_COLONNES)
+        self.plateau = np.zeros((NB_LIGNES, NB_COLONNES), dtype=int)
     
     def show(self):
         """ Affiche le tableau de dimensions nb_lignes  x nb_colonnes"""
@@ -37,12 +38,16 @@ class Plateau:
         return np.all(self.plateau != 0)
     
     def play(self, x, joueur):
-        y = (NB_LIGNES - 1) - self.filled_cases[x]
+        #Cette ligne permet de placer le jeton sur la première ligne libre (filled_cases étant les lignes occupées)
+        y = (NB_LIGNES - 1) - self.filled_cases[x] 
         self.filled_cases[x] += 1
         self.plateau[y,x] = joueur.id
+        self.nb_coups += 1
 
+        #On retire le jeton si la colonne est complète 
         if self.filled_cases[x]>=self.nb_lignes :
             self.possible_actions.remove(x)
+            self.nb_coups -= 1
         
     def has_won(self):
         combo = []
@@ -59,9 +64,7 @@ class Plateau:
     def run(self, joueur1, joueur2) : 
         """
         Permet de jouer une partie entre le joueur 1 et le joueur 2 : ils jouent à tour de rôle tant que la partie n'est pas finie.
-        Elle renvoie 1 ou -1 selon la victoire du joueur 1 ou 2, et 0 en cas de nul.
-        Si mode vaut 0, l'utilisateur saisie le colonne souhaitée du prochain coup via la ligne de commande
-        Si mode vaut 1, on génere une colonne aléatoire
+        Elle renvoie 1 ou -1 selon la victoire du joueur 1 ou 2, et 0 en cas de nul et renvoie aussi le nombre de coups qui ont été faits
         """
         while self.running :
             if self.tour == 1 :
@@ -74,9 +77,10 @@ class Plateau:
                 joueur2.play(self)
                 self.tour = 1
                 if self.is_finished():
-                    break
+                    break 
 
-        return self.end
+
+        return (self.end, self.nb_coups)
 
     def is_finished(self) :
         has_won = self.has_won()

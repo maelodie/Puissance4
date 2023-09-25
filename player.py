@@ -56,7 +56,7 @@ class Player:
                 joueur1 = Player(ID_JOUEUR1, 0)
 
             joueur2 = Player(self.id, 0)
-            res = plateau_MC.run(joueur1, joueur2) #Resultat du jeu aléatoir avec premier coup action
+            res = plateau_MC.run(joueur1, joueur2)[0] #Resultat du jeu aléatoire avec premier coup action
 
             if res == self.id : #Mettre à jour le tableau de victoire si le jeu est gagné
                 victory_count[action] += 1 
