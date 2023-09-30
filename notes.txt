@@ -1,2 +1,6 @@
 - Améliorer la complexité de la fonction quadruplets_possibles en réduisant 
 le nombre de boucles utilisées et en compactant la fonction
+
+- Améliorer la complexité de MOnte -Carlo
+
+- Regarder pourquoi le print 0 ne marche pas pour la fonctions anlayse de data 

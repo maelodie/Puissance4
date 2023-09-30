@@ -9,20 +9,21 @@ def analyse(joueur1, joueur2, nb_parties):
     - On définit une variable aléatoire X qui représente le nombre de coups
     nécessaires avant qu'un joueur ne gagne la partie
 
-    - On a 2 événements: A, le premier joueur gagne la partie et B, le second
-    joueur gagne la partie
+    - On a 3 événements: A, le premier joueur gagne la partie et B, le second
+    joueur gagne la partie et C, la partie est nulle
 
-    - On calcule P(A) et P(B) les probabilités des événements A et B
+    - On calcule P(A) et P(B) les probabilités des événements A et B ainsi que P(C)
 
     - On associe le nombre de coup à la probabilité qu'un joueur ne gagne la partie 
     au nombre de coups
     """
     victoire_J1 = 0 #nombre de victoires du joueur 1
     victoire_J2 = 0 #nombre de victoires du joueur 2
-    
+    parties_nulles = 0 #nombre de parties nulles
+
     P_A = 0 #probabilité de l'événement A
     P_B = 0 #probabilité de l'événement B
-
+    P_0 = 0 #probabilité de l'événement C
     tab_res = []
 
     for i in range(nb_parties):
@@ -30,19 +31,26 @@ def analyse(joueur1, joueur2, nb_parties):
         res = plateau.run(joueur1, joueur2)
         if res[0] == 1:
             victoire_J1 += 1
-        else:
+        elif res[0] == -1:
             victoire_J2 += 1
+        else:
+            parties_nulles +=1
         tab_res.append(res)
         plateau.reset()
     
     #résultats
     P_A = victoire_J1 / nb_parties
     P_B = victoire_J2 / nb_parties
-    #print(tab_res)
+    P_0 = parties_nulles / nb_parties
+
+    #affichages 
+    for i in tab_res:
+        print(i)
     #print("Nombre de victoires joueur 1: ", victoire_J1)
     #print("Nombre de victoires joueur 2: ", victoire_J2)
     print("Probabilité que le joueur 1 gagne: ", P_A)
     print("Probabilité que le joueur 2 gagne: ", P_B)
+    print("Probabilité que la partie soit null: ", P_0)
 
     #graphes
     graphe(tab_res)
