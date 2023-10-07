@@ -21,9 +21,10 @@ class Plateau:
         self.tour = 1
         self.end = 0
         self.possible_actions = [0,1,2,3,4,5,6]
+        self.nb_coups = 0
     
     def reset(self):
-        self.plateau = np.zeros(NB_LIGNES, NB_COLONNES)
+        self.plateau = np.zeros((NB_LIGNES, NB_COLONNES) , dtype = int)
     
     def show(self):
         """ Affiche le tableau de dimensions nb_lignes  x nb_colonnes"""
@@ -37,9 +38,11 @@ class Plateau:
         return np.all(self.plateau != 0)
     
     def play(self, x, joueur):
+        #Cette ligne permet de placer le jeton sur la première ligne libre (filled_cases étant les lignes occupées)
         y = (NB_LIGNES - 1) - self.filled_cases[x]
         self.filled_cases[x] += 1
         self.plateau[y,x] = joueur.id
+        self.nb_coups += 1
 
         if self.filled_cases[x]>=self.nb_lignes :
             self.possible_actions.remove(x)
@@ -76,7 +79,7 @@ class Plateau:
                 if self.is_finished():
                     break
 
-        return self.end
+        return(self.end, self.nb_coups)
 
     def is_finished(self) :
         has_won = self.has_won()
