@@ -66,10 +66,10 @@ def UCB(recomp_estimees, count, count_victory):
 
     return a
 
-def simulate(rendements, recomp_estimees, count, count_victory, strategie, T):
+def simulate(rendements, recomp_estimees, count, count_victory, strategie, times):
     gain = 0
 
-    for i in range(T):
+    for i in range(times):
         a = strategie(recomp_estimees, count, count_victory)
         count[a] += 1
         if tirage_bernouilli(rendements, a):
@@ -87,8 +87,11 @@ def simulate(rendements, recomp_estimees, count, count_victory, strategie, T):
     recomp_estimees = [a / b if b != 0 else 0 for a, b in zip(count_victory, count)]
     return gain, recomp_estimees, count, count_victory
 
-def reset_list(list):
-    for index in list:
-        list[index] = 0
-
+def calcul_gmax(rend, times):
+    index_max = rend.index(max(rend))
+    gain_max = 0
+    for i in range(times):
+        if tirage_bernouilli(rend, index_max):
+            gain_max += 1
+    return gain_max
 

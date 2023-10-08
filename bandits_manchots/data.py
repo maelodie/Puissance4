@@ -3,7 +3,7 @@ import numpy as np
 from settings import *
 from algo import *
 
-def comparaisons_rendements(rendements, recomp_estimees, count, count_victory, strategie, T):
+def comparaisons_rendements(rend, recomp_estimees, count, count_victory, strategie, T):
     """
         Quantification de l'exploration
         Cette fonction analyse les résultats de chaque fonction 
@@ -11,15 +11,15 @@ def comparaisons_rendements(rendements, recomp_estimees, count, count_victory, s
 
     #Tableaux à comparer
     TAB_A = [] #Tableau des récompenses estimées
-    TAB_B = rendements #Tableau des rendements
+    TAB_B = rend #Tableau des rendements
     
 
     #Variables à comparer
     gain_joueur = 0
-    gain_max_espéré = T
+    gain_max_espéré = calcul_gmax(rend, T)
     
     #simulation
-    gain_joueur, TAB_A, _ , _ = simulate(rendements, recomp_estimees, count, count_victory, strategie, T)
+    gain_joueur, TAB_A, _ , _ = simulate(rend, recomp_estimees, count, count_victory, strategie, T)
     print(gain_joueur)
 
     #affichages
@@ -41,12 +41,12 @@ def comparaisons_rendements(rendements, recomp_estimees, count, count_victory, s
     #algo
     plt.show()
 
-def comparaison_victoires(rendements, recomp_estimees, count, count_victory, strategie, T):
+def comparaison_victoires(rend, recomp_estimees, count, count_victory, strategie, T):
     """
     Quantification de l'exploitation
     Cette fonction compare le nombre de victoires vs le nombre d'essais pour chaque algorithme
     """ 
-    _, _, count, count_victory = simulate(rendements, recomp_estimees, count, count_victory, strategie, T)
+    _, _, count, count_victory = simulate(rend, recomp_estimees, count, count_victory, strategie, T)
     x = np.arange(N) #Tableau utilisé pour le graphe avec N entiers
 
     plt.bar(x - 0.2, count, width=0.4, label="Nombre d'essais", color='b')
@@ -60,15 +60,15 @@ def comparaison_victoires(rendements, recomp_estimees, count, count_victory, str
     #algo
     plt.show()
 
-def comparaison_gains(rendements, recomp_estimees, count, count_victory, T):
+def comparaison_gains(rend, recomp_estimees, count, count_victory, T):
     """
     Cette fonction compare les gains de chaque algorithme
     """
-    gain_max = T
-    gain_aleatoire, _, _, _ = simulate(rendements, recomp_estimees, count, count_victory, aleatoire, T)
-    gain_greedy, _, _, _ = simulate(rendements, recomp_estimees, count, count_victory, greedy, T)
-    gain_epsilon_greedy, _, _, _ = simulate(rendements, recomp_estimees, count, count_victory, epsilon_greedy, T)
-    gain_UCB, _, _, _ = simulate(rendements, recomp_estimees, count, count_victory, UCB, T)
+    gain_max = calcul_gmax(rend, T)
+    gain_aleatoire, _, _, _ = simulate(rend, recomp_estimees, count, count_victory, aleatoire, T)
+    gain_greedy, _, _, _ = simulate(rend, recomp_estimees, count, count_victory, greedy, T)
+    gain_epsilon_greedy, _, _, _ = simulate(rend, recomp_estimees, count, count_victory, epsilon_greedy, T)
+    gain_UCB, _, _, _ = simulate(rend, recomp_estimees, count, count_victory, UCB, T)
 
     data = [gain_max, gain_aleatoire, gain_greedy, gain_epsilon_greedy, gain_UCB]
     labels = ['Gain Maximal', 'Gain Aleatoire', 'Gain Greedy', 'Gain Epsilon Greedy', 'Gain UCB']
