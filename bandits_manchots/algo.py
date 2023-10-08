@@ -20,7 +20,7 @@ def aleatoire(recomp_estimees, count, count_victory):
     Tire aléatoirement et uniformément un numéro de levier
     Baseline, algorithme que tous les autres doivent battre
     """
-    a = random.randint(0, 9)
+    a = random.randint(0, N-1)
     return a
 
 def greedy(recomp_estimees, count, count_victory):
@@ -66,13 +66,24 @@ def UCB(recomp_estimees, count, count_victory):
 
     return a
 
-def simulate(rendements, recomp_estimees, count, count_victory, strategie, times):
+def simulate(rendements, recomp_estimees, count, count_victory, strategie, T):
     gain = 0
-
-    for i in range(times):
+    regret = []
+    cumul_regret = 0
+    cumul_max = 0
+    mu_max = rendements.index(max(rendements))
+    for i in range(T):
         a = strategie(recomp_estimees, count, count_victory)
         count[a] += 1
-        if tirage_bernouilli(rendements, a):
+        tirage = tirage_bernouilli(rendements, a)
+        tirage_max = tirage_bernouilli(rendements, mu_max)
+
+        #remplissage du tableau de regret
+        cumul_regret += tirage
+        cumul_max += tirage_max
+        regret.append(cumul_max - cumul_regret)
+
+        if tirage:
             count_victory[a] += 1
             gain += 1
 
@@ -85,7 +96,7 @@ def simulate(rendements, recomp_estimees, count, count_victory, strategie, times
     ucb_call_count = 0
 
     recomp_estimees = [a / b if b != 0 else 0 for a, b in zip(count_victory, count)]
-    return gain, recomp_estimees, count, count_victory
+    return gain, recomp_estimees, count, count_victory, regret
 
 def calcul_gmax(rend, times):
     index_max = rend.index(max(rend))
@@ -94,4 +105,12 @@ def calcul_gmax(rend, times):
         if tirage_bernouilli(rend, index_max):
             gain_max += 1
     return gain_max
+
+
+def calcul_regret(rend, tirage):
+    regret = []
+    cumulation_regret = 0
+    for i in range(T):
+        regret.appe
+    return regret
 

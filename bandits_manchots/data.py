@@ -19,7 +19,7 @@ def comparaisons_rendements(rend, recomp_estimees, count, count_victory, strateg
     gain_max_espéré = calcul_gmax(rend, T)
     
     #simulation
-    gain_joueur, TAB_A, _ , _ = simulate(rend, recomp_estimees, count, count_victory, strategie, T)
+    gain_joueur, TAB_A, _ , _ , _ = simulate(rend, recomp_estimees, count, count_victory, strategie, T)
     print(gain_joueur)
 
     #affichages
@@ -31,8 +31,8 @@ def comparaisons_rendements(rend, recomp_estimees, count, count_victory, strateg
     #dessin des bars de comparaison entre le rendement estimé et le rendement réel
     x = np.arange(N) #Tableau utilisé pour le graphe avec N entiers
     
-    plt.bar(x - 0.2, TAB_B, width=0.4, label='Rendements Estimées', color='r')
-    plt.bar(x + 0.2, TAB_A, width=0.4, label='Rendements Réelles', color='b')
+    plt.bar(x - 0.2, TAB_B, width=0.4, label='Récompenses Estimées', color='r')
+    plt.bar(x + 0.2, TAB_A, width=0.4, label='Récompenses Réelles', color='g')
 
     plt.xlabel('Levier')
     plt.ylabel('Récompenses')
@@ -46,7 +46,7 @@ def comparaison_victoires(rend, recomp_estimees, count, count_victory, strategie
     Quantification de l'exploitation
     Cette fonction compare le nombre de victoires vs le nombre d'essais pour chaque algorithme
     """ 
-    _, _, count, count_victory = simulate(rend, recomp_estimees, count, count_victory, strategie, T)
+    _, _, count, count_victory, _ = simulate(rend, recomp_estimees, count, count_victory, strategie, T)
     x = np.arange(N) #Tableau utilisé pour le graphe avec N entiers
 
     plt.bar(x - 0.2, count, width=0.4, label="Nombre d'essais", color='b')
@@ -65,10 +65,10 @@ def comparaison_gains(rend, recomp_estimees, count, count_victory, T):
     Cette fonction compare les gains de chaque algorithme
     """
     gain_max = calcul_gmax(rend, T)
-    gain_aleatoire, _, _, _ = simulate(rend, recomp_estimees, count, count_victory, aleatoire, T)
-    gain_greedy, _, _, _ = simulate(rend, recomp_estimees, count, count_victory, greedy, T)
-    gain_epsilon_greedy, _, _, _ = simulate(rend, recomp_estimees, count, count_victory, epsilon_greedy, T)
-    gain_UCB, _, _, _ = simulate(rend, recomp_estimees, count, count_victory, UCB, T)
+    gain_aleatoire, _, _, _ , _= simulate(rend, recomp_estimees, count, count_victory, aleatoire, T)
+    gain_greedy, _, _, _, _ = simulate(rend, recomp_estimees, count, count_victory, greedy, T)
+    gain_epsilon_greedy, _, _, _, _= simulate(rend, recomp_estimees, count, count_victory, epsilon_greedy, T)
+    gain_UCB, _, _, _, _ = simulate(rend, recomp_estimees, count, count_victory, UCB, T)
 
     data = [gain_max, gain_aleatoire, gain_greedy, gain_epsilon_greedy, gain_UCB]
     labels = ['Gain Maximal', 'Gain Aleatoire', 'Gain Greedy', 'Gain Epsilon Greedy', 'Gain UCB']
@@ -84,7 +84,15 @@ def comparaison_gains(rend, recomp_estimees, count, count_victory, T):
     plt.title('Comparaison des gains par algorithme')
 
     plt.show()
-    
+
+def graphe_regret(rend, recomp_estimees, count, count_victory, strategie, T):
+    _, _, _, _, tab_regret = simulate(rend, recomp_estimees, count, count_victory, strategie, T)
+    plt.plot(range(1, T + 1), tab_regret, marker='o')
+    plt.xlabel('Temps (t)')
+    plt.ylabel('Regret')
+    plt.title('Évolution du regret en fonction du temps')
+    plt.show()
+
 def experience(rend, T_value, T_greedy_value, epsilon_value, T_ucb_value):
     #Variable resets
     global T
@@ -110,6 +118,12 @@ def experience(rend, T_value, T_greedy_value, epsilon_value, T_ucb_value):
 
     #Comparaison des gains
     comparaison_gains(rend, [0] * N, [0] * N, [0] * N, T)
+
+    #regrets
+    graphe_regret(rend, [0] * N, [0] * N, [0] * N, aleatoire, T)
+    graphe_regret(rend, [0] * N, [0] * N, [0] * N, greedy, T)
+    graphe_regret(rend, [0] * N, [0] * N, [0] * N, epsilon_greedy, T)
+    graphe_regret(rend, [0] * N, [0] * N, [0] * N, UCB, T)
 
 
 

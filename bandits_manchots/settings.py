@@ -3,7 +3,7 @@ au cours du jeu du bandits-manchots"""
 
 import random 
 # Variables globales
-N = 10 #Nombre de leviers
+N = 20 #Nombre de leviers
 T = 3000 #Nombre d'essais
 T_greedy = 10 #Nombre de tours pendant lesquels on explore
 greedy_call_count = 0 #Nombre d'appels à greedy
