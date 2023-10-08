@@ -3,8 +3,7 @@ from settings import *
 from algo import *
 
 # VALEURS INITIALES 
-count_victory = [0] * N
-recomp_estimees = [0] * N
-count = [0] * N
+from data import *
+#format rendements, T, T_greedy, epsilon, T_ucb
 
-analysis(rendements_1, recomp_estimees, count, count_victory, UCB, T)
+experience(rendements_1, 500, 100, 0.1, 200)

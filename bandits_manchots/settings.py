@@ -5,7 +5,7 @@ import random
 # Variables globales
 N = 10 #Nombre de leviers
 T = 3000 #Nombre d'essais
-T_greedy = 400 #Nombre de tours pendant lesquels on explore
+T_greedy = 10 #Nombre de tours pendant lesquels on explore
 greedy_call_count = 0 #Nombre d'appels à greedy
 greedy_max_ind = 0 #index maximal de greedy
 ucb_call_count = 0 #nombre d'appels à ucb

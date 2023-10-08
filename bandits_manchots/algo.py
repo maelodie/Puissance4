@@ -39,9 +39,9 @@ def greedy(recomp_estimees, count, count_victory):
         return aleatoire(recomp_estimees, count, count_victory)
     return greedy_max_ind
 
-def UCB(recomp_estimees, count, count_victory):
+def epsilon_greedy(recomp_estimees, count, count_victory):
     #note: un epsilon élevé encourage à plus d'exploration, un epsilon faible encourage à plus d'exploitation
-    global epsilon #probabilité de choisir greedy
+    
     a = 0 
     #si un nombre aléatoire < epsilon on applique aleatoire, sinon on applique greedy
     if random.uniform(0,1) < epsilon:
@@ -67,12 +67,14 @@ def UCB(recomp_estimees, count, count_victory):
     return a
 
 def simulate(rendements, recomp_estimees, count, count_victory, strategie, T):
-   
+    gain = 0
+
     for i in range(T):
         a = strategie(recomp_estimees, count, count_victory)
         count[a] += 1
         if tirage_bernouilli(rendements, a):
             count_victory[a] += 1
+            gain += 1
 
    #reset all global variables
     global greedy_call_count
@@ -83,20 +85,10 @@ def simulate(rendements, recomp_estimees, count, count_victory, strategie, T):
     ucb_call_count = 0
 
     recomp_estimees = [a / b if b != 0 else 0 for a, b in zip(count_victory, count)]
-    return recomp_estimees, count, count_victory
+    return gain, recomp_estimees, count, count_victory
 
-def gain_maximal(rendements):
-    gain = 0
-    max_index = rendements.index(max(rendements))
-    for i in range(T):
-        if tirage_bernouilli(rendements, max_index):
-            gain += 1
-    return gain
-
-def nb_victoires(count_victory):
-    victoire = 0
-    for i in count_victory:
-        victoire += i
-    return victoire
+def reset_list(list):
+    for index in list:
+        list[index] = 0
 
 
