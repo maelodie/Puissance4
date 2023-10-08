@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 from plateau import *
+import numpy as np 
 from player import * 
 
 def analyse(joueur1, joueur2, nb_parties):
@@ -53,6 +54,7 @@ def analyse(joueur1, joueur2, nb_parties):
     #     print(i)
     print("Nombre de victoires joueur 1: ", victoire_J1)
     print("Nombre de victoires joueur 2: ", victoire_J2)
+    print("Nombre de parties nulles: ", parties_nulles)
     print("Probabilité que le joueur 1 gagne: ", P_A)
     print("Probabilité que le joueur 2 gagne: ", P_B)
     print("Probabilité que la partie soit null: ", P_0)
@@ -66,17 +68,34 @@ def analyse(joueur1, joueur2, nb_parties):
 
 def graphe(list):
     #listes de données
-    nb_coups_j1 = [x[1] for x in list if x[0] == 1]
-    nb_coups_j2 = [x[1] for x in list if x[0] == -1]
+    data_j1 = [x[1] for x in list if x[0] == 1]
+    data_j2 = [x[1] for x in list if x[0] == -1]
 
-    #historigrammes
-    plt.hist(nb_coups_j1, bins=10, alpha=0.5, label='Joueur 1', color='blue')
-    plt.hist(nb_coups_j2, bins=10, alpha=0.5, label='Joueur 2', color='green')
 
-    #graphique
-    plt.xlabel('Nombre de coups')
+    # Create histograms
+    hist_j1, bins_j1 = np.histogram(data_j1, bins=10)
+    hist_j2, bins_j2 = np.histogram(data_j2, bins=10)
+
+    # Define bin centers for plotting
+    bin_centers_j1 = 0.5 * (bins_j1[:-1] + bins_j1[1:])
+    bin_centers_j2 = 0.5 * (bins_j2[:-1] + bins_j2[1:])
+
+    # Create the plot
+    plt.figure(figsize=(8, 6))
+
+    # Plot histogram for Joueur 1
+    plt.bar(bin_centers_j1, hist_j1, width=1, alpha=0.5, label='Joueur 1', color='blue')
+
+    # Plot histogram for Joueur 2
+    plt.bar(bin_centers_j2, hist_j2, width=1, alpha=0.5, label='Joueur 2', color='green')
+
+    # Add labels and title
+    plt.xlabel('Nombre de coups avant la victoire')
     plt.ylabel('Fréquence')
-    plt.title('Fréquence de victoire selon le nombre de coups')
+    plt.title('Distribution du nombre de coups avant la victoire')
 
-    #Affichage
+    # Add legend
+    plt.legend()
+
+    # Show the plot
     plt.show()
