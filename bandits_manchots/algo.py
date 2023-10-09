@@ -33,7 +33,7 @@ def greedy(recomp_estimees, count, count_victory):
         if greedy_call_count ==  T_greedy - 1 :
             tmp =  [a / b if b != 0 else 0 for a, b in zip(count_victory, count)]
             greedy_max_ind = tmp.index(max(tmp))
-            print("max_ind : ", greedy_max_ind)
+            print("ind_max:",greedy_max_ind)
 
         greedy_call_count += 1
         return aleatoire(recomp_estimees, count, count_victory)
@@ -66,11 +66,15 @@ def UCB(recomp_estimees, count, count_victory):
 
     return a
 
-def simulate(rendements, recomp_estimees, count, count_victory, strategie, T):
+def simulate(rendements, strategie):
     gain = 0
+    recomp_estimees = [0] * N
+    count = [0] * N
+    count_victory = [0] * N
     regret = []
     cumul_regret = 0
     cumul_max = 0
+    
     mu_max = rendements.index(max(rendements))
     for i in range(T):
         a = strategie(recomp_estimees, count, count_victory)
@@ -86,6 +90,7 @@ def simulate(rendements, recomp_estimees, count, count_victory, strategie, T):
         if tirage:
             count_victory[a] += 1
             gain += 1
+    
 
    #reset all global variables
     global greedy_call_count
@@ -96,6 +101,10 @@ def simulate(rendements, recomp_estimees, count, count_victory, strategie, T):
     ucb_call_count = 0
 
     recomp_estimees = [a / b if b != 0 else 0 for a, b in zip(count_victory, count)]
+
+    print("recompenses estimees", recomp_estimees)
+    print("count", count)
+    print("count_victory", count_victory)
     return gain, recomp_estimees, count, count_victory, regret
 
 def calcul_gmax(rend, times):
