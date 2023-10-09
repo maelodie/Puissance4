@@ -3,17 +3,19 @@ au cours du jeu du bandits-manchots"""
 
 import random 
 # Variables globales
-N = 20 #Nombre de leviers
+N = 10 #Nombre de leviers
 T = 3000 #Nombre d'essais
-T_greedy = 10 #Nombre de tours pendant lesquels on explore
+T_greedy = 0 #Nombre de tours pendant lesquels on explore
 greedy_call_count = 0 #Nombre d'appels à greedy
 greedy_max_ind = 0 #index maximal de greedy
 ucb_call_count = 0 #nombre d'appels à ucb
-T_ucb = 1000 #nombre de coups joués en aléatoire pendant ucb
-epsilon = 0.5
+T_ucb = 0 #nombre de coups joués en aléatoire pendant ucb
+epsilon = 0
 
 #Listes de rendements sur lesquels on va mener l'expérience
 rendements = [(random.uniform(0, 1)) for i in range(N)]
+rend_3ele = [0.50, 0.02, 0.86]
+rend_20ele = []
 rendements_1 = [0.22, 0.51, 0.16, 0.75, 0.69, 0.97, 0.01, 0.98, 0.28, 0.46]
 rendements_2 = [0.86, 0.13, 0.65, 0.73, 0.57, 0.39, 0.08, 0.52, 0.34, 0.91]
 rendements_3 = [0.63, 0.82, 0.94, 0.19, 0.33, 0.27, 0.73, 0.76, 0.62, 0.45]

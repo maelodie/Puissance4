@@ -30,9 +30,9 @@ def comparaisons_rendements(rend, recomp_estimees, count, count_victory, strateg
 
     #dessin des bars de comparaison entre le rendement estimé et le rendement réel
     x = np.arange(N) #Tableau utilisé pour le graphe avec N entiers
-    
-    plt.bar(x - 0.2, TAB_B, width=0.4, label='Récompenses Estimées', color='r')
-    plt.bar(x + 0.2, TAB_A, width=0.4, label='Récompenses Réelles', color='g')
+
+    plt.bar(x + 0.2, TAB_A, width=0.4, label='Récompenses Estimées', color='g')
+    plt.bar(x - 0.2, TAB_B, width=0.4, label='Récompenses Réelles', color='r')
 
     plt.xlabel('Levier')
     plt.ylabel('Récompenses')
@@ -93,7 +93,7 @@ def graphe_regret(rend, recomp_estimees, count, count_victory, strategie, T):
     plt.title('Évolution du regret en fonction du temps')
     plt.show()
 
-def experience(rend, T_value, T_greedy_value, epsilon_value, T_ucb_value):
+def experience(rend, T_value, T_greedy_value, epsilon_value, T_ucb_value, strategie):
     #Variable resets
     global T
     T = T_value
@@ -104,26 +104,27 @@ def experience(rend, T_value, T_greedy_value, epsilon_value, T_ucb_value):
     global T_ucb
     T_ucb = T_ucb_value
 
-    #Comparaison des rendements
-    comparaisons_rendements(rend, [0] * N, [0] * N, [0] * N, aleatoire, T)
-    comparaisons_rendements(rend, [0] * N, [0] * N, [0] * N, greedy, T)
-    comparaisons_rendements(rend, [0] * N, [0] * N, [0] * N, epsilon_greedy, T)
-    comparaisons_rendements(rend, [0] * N, [0] * N, [0] * N, UCB, T)
-
-    #Comparaison du nombre de victoires
-    comparaison_victoires(rend, [0] * N, [0] * N, [0] * N, aleatoire, T)
-    comparaison_victoires(rend, [0] * N, [0] * N, [0] * N, greedy, T)
-    comparaison_victoires(rend, [0] * N, [0] * N, [0] * N, epsilon_greedy, T)
-    comparaison_victoires(rend, [0] * N, [0] * N, [0] * N, UCB, T)
-
-    #Comparaison des gains
+    if strategie.__name__ == "aleatoire":
+        comparaisons_rendements(rend, [0] * N, [0] * N, [0] * N, aleatoire, T)
+        comparaison_victoires(rend, [0] * N, [0] * N, [0] * N, aleatoire, T)
+        graphe_regret(rend, [0] * N, [0] * N, [0] * N, aleatoire, T)
+    elif strategie.__name__ == "greedy":
+        comparaisons_rendements(rend, [0] * N, [0] * N, [0] * N, greedy, T)
+        comparaison_victoires(rend, [0] * N, [0] * N, [0] * N, greedy, T)
+        graphe_regret(rend, [0] * N, [0] * N, [0] * N, greedy, T)
+    elif strategie.__name__ == "epsilon_greedy":
+        comparaisons_rendements(rend, [0] * N, [0] * N, [0] * N, epsilon_greedy, T)
+        comparaison_victoires(rend, [0] * N, [0] * N, [0] * N, epsilon_greedy, T)
+        graphe_regret(rend, [0] * N, [0] * N, [0] * N, epsilon_greedy, T)
+    elif strategie.__name__ == "UCB":
+        comparaisons_rendements(rend, [0] * N, [0] * N, [0] * N, UCB, T)
+        comparaison_victoires(rend, [0] * N, [0] * N, [0] * N, UCB, T)
+        graphe_regret(rend, [0] * N, [0] * N, [0] * N, UCB, T)
+    else:
+        print("Le nom de fonction est incorrect\n")
     comparaison_gains(rend, [0] * N, [0] * N, [0] * N, T)
 
-    #regrets
-    graphe_regret(rend, [0] * N, [0] * N, [0] * N, aleatoire, T)
-    graphe_regret(rend, [0] * N, [0] * N, [0] * N, greedy, T)
-    graphe_regret(rend, [0] * N, [0] * N, [0] * N, epsilon_greedy, T)
-    graphe_regret(rend, [0] * N, [0] * N, [0] * N, UCB, T)
+
 
 
 

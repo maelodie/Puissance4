@@ -107,10 +107,3 @@ def calcul_gmax(rend, times):
     return gain_max
 
 
-def calcul_regret(rend, tirage):
-    regret = []
-    cumulation_regret = 0
-    for i in range(T):
-        regret.appe
-    return regret
-
