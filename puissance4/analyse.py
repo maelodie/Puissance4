@@ -18,6 +18,9 @@ def analyse(joueur1, joueur2, nb_parties):
     victoire_J2 = 0 #nombre de victoires du joueur 2
     parties_nulles = 0 #nombre de parties nulles
 
+    tab_1= [0] * 43 #nombre de partie avec tab[i] coups avant la victoire du joueur 1
+    tab_2= [0] * 43 #nombre de partie avec tab[i] coups avant la victoire du joueur 2
+
     P_A = 0 #probabilité de l'événement A
     P_B = 0 #probabilité de l'événement B
     P_0 = 0 #probabilité de l'événement C
@@ -32,9 +35,11 @@ def analyse(joueur1, joueur2, nb_parties):
         if res[0] == 1:
             victoire_J1 += 1
             nb_coups_j1 += res[1]
+            tab_1[res[1]] += 1
         elif res[0] == -1:
             victoire_J2 += 1 
             nb_coups_j2 += res[1]
+            tab_2[res[1]] += 1
         else:
             parties_nulles +=1
             nb_coups_nulles += res[1]
@@ -42,16 +47,23 @@ def analyse(joueur1, joueur2, nb_parties):
         plateau.reset()
 
     #résultats
+
     P_A = victoire_J1 / nb_parties
     P_B = victoire_J2 / nb_parties
     P_0 = parties_nulles / nb_parties
     C_A = nb_coups_j1 / victoire_J1
     C_B = nb_coups_j2 / victoire_J2
-    C_0 = nb_coups_nulles / parties_nulles
+    P_1 = np.where(tab_1 == 0, 0.0, np.divide(tab_1, nb_parties)) #les prob de gains avec i coups pour joueur 1
+    P_2 = np.where(tab_2 == 0, 0.0, np.divide(tab_2, nb_parties)) #les prob de gains avec i coups pour joueur 2
+    print(P_1)
+    if parties_nulles == 0:
+        C_0 = 0  # Handle division by zero by setting C_0 to a specific value (e.g., 0)
+    else:
+        C_0 = nb_coups_nulles / parties_nulles
 
-    #affichages 
-    # for i in tab_res:
-    #     print(i)
+    E_1 = esperance(tab_1, P_1)
+    E_2 = esperance(tab_2, P_2)
+ 
     print("Nombre de victoires joueur 1: ", victoire_J1)
     print("Nombre de victoires joueur 2: ", victoire_J2)
     print("Nombre de parties nulles: ", parties_nulles)
@@ -63,8 +75,17 @@ def analyse(joueur1, joueur2, nb_parties):
     print("Nombre de coups moyens avant la victoire du Jouer 2 : ", C_B)
     print("Nombre de coups moyens avant une partie nulle : ", C_0)
 
+    print("Espérance du nombre de coups avant la victoire du joueur 1 : ", E_1)
+    print("Espérance du nombre de coups avant la victoire du joueur 2 : ", E_2)
+
     #graphes
     graphe(tab_res)
+
+def esperance(tab, p) :
+    esp = 0
+    for i in range(len(tab)) : 
+        esp += i*p[i]
+    return esp
 
 def graphe(list):
     #listes de données

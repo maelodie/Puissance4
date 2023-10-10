@@ -3,7 +3,7 @@ NB_LIGNES = 6
 PUISSANCE = 4
 ID_JOUEUR1 = 1
 ID_JOUEUR2 = -1
-N = 500
+N = 5
 
 def quadruplets_colonnes(x, y, puissance, my_list):
     for k in range(x) :

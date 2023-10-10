@@ -70,7 +70,16 @@ class Player:
 
         #Retourner la valeur maximal
         final_action = res_MC.argmax()
-        print("Final MC action : ", final_action)
-        return final_action
+        if final_action in plateau_MC.possible_actions :
+            return final_action
+        else :
+            final_action  = correctAction(plateau_MC.possible_actions, res_MC, final_action)
+            return final_action
+
+def correctAction(poss_actions, res_MC, final_action) :
+    while final_action not in poss_actions :
+        res_MC[final_action] = -1
+        final_action = res_MC.argmax()
+    return final_action
 
 

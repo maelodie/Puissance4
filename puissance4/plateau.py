@@ -44,9 +44,9 @@ class Plateau:
         self.plateau[y,x] = joueur.id
         self.nb_coups += 1
 
-        if self.filled_cases[x]>=self.nb_lignes :
+        if self.filled_cases[x]>=self.nb_lignes and  x in self.possible_actions :
             self.possible_actions.remove(x)
-        
+ 
     def has_won(self):
         combo = []
         for quad in self.w_combos:
