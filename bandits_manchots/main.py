@@ -4,6 +4,7 @@ from algo import *
 
 # VALEURS INITIALES 
 from data import *
-#format rendements, T, T_greedy, epsilon, T_ucb, fonction
 
-experience(rendements_1, UCB)
+
+experience(rendements_1, UCB) #replace with algorithm name and data in settings for a new configuration
+regrets_gains(rendements_1)
