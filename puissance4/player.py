@@ -4,10 +4,12 @@ import random
 from copy import deepcopy
 
 class Player:
-
+    """
+    Classe qui représente un joueur du jeu Puissance 4
+    """
     def __init__(self, id, mode):
-        self.id = id
-        self.mode= mode
+        self.id = id  # (1 ou -1)
+        self.mode= mode #(0 : aléatoire ou 1 : Monte-carlo)
     
     def play(self, plateau : Plateau):
         """
@@ -15,19 +17,13 @@ class Player:
         Si mode vaut 0, on génere une colonne aléatoire
         Si mode vaut 1, le joueur utilise l'algorithme Monte-Carlo
         """
-        # if self.id == ID_JOUEUR1:
-        #     #print("C'est le tour du Joueur 1")
-        # elif self.id == ID_JOUEUR2:
-        #     #print("C'est le tour du Joueur 2")
 
         if self.mode==0 :
             player_action = random.choice(plateau.possible_actions)
-            #print("Le coup à jouer est la colonne ", player_action)
             plateau.play(player_action,self)
 
         if self.mode == 1 :
             player_action = self.monte_Carlo_play(plateau)
-            #print("Le coup à jouer est la colonne ", player_action)
             plateau.play(player_action,self)
 
     def monte_Carlo_play(self, etat : Plateau) :
@@ -42,11 +38,10 @@ class Player:
 
         #Simuler l'expérience N fois
         for i in range(N) :
-            # print("DEBUT PHASE MC : ", i)
-            plateau_MC = deepcopy(etat)  #Copier l'état actuel du plateau
+            plateau_MC = deepcopy(etat)                          #Copier l'état actuel du plateau
             action =  random.choice(plateau_MC.possible_actions) #Tirer un premier coup aléatoirement
-            column_count[action] += 1 #Mettre à jour le compteur pour la colonne tirée
-            plateau_MC.play(action, self) #Jouer le premier coup dans la simulation Monte Carlo
+            column_count[action] += 1                            #Mettre à jour le compteur pour la colonne tirée
+            plateau_MC.play(action, self)                        #Jouer le premier coup dans la simulation Monte Carlo
 
             # Mettre à jour le tour des joueurs Monte Carlo
             if self.id == ID_JOUEUR1 :
@@ -56,27 +51,26 @@ class Player:
                 joueur1 = Player(ID_JOUEUR1, 0)
 
             joueur2 = Player(self.id, 0)
-            res = plateau_MC.run(joueur1, joueur2) #Resultat du jeu aléatoir avec premier coup action
+            res = plateau_MC.run(joueur1, joueur2) #Resultat de la partie jouée aléatoirement avec comme premier coup 'action'
 
-            if res == self.id : #Mettre à jour le tableau de victoire si le jeu est gagné
+            if res == self.id :     #Mettre à jour le tableau de victoire si le jeu est gagné
                 victory_count[action] += 1 
 
         res_MC = np.divide(victory_count, column_count) #Calculer le nombre de victoire par rapport au nombre de tirage
-        # print("victory_count : ", victory_count)
-        # print("column_count : ", column_count)
-        # print("res_MC : ", res_MC)
-
-        # print("FIN PHASE")
-
-        #Retourner la valeur maximal
+      
+        #Retourner le coups qui favorise le plus de victoire
         final_action = res_MC.argmax()
-        if final_action in plateau_MC.possible_actions :
+
+        if final_action in plateau_MC.possible_actions :  #vérifier que la colonne n'est pas pleine
             return final_action
         else :
             final_action  = correctAction(plateau_MC.possible_actions, res_MC, final_action)
             return final_action
 
-def correctAction(poss_actions, res_MC, final_action) :
+def correctAction(poss_actions, res_MC, final_action) : 
+    """
+    Choisi la colonne la plus optimale parmi celles qui ne sont pas pleines
+    """
     while final_action not in poss_actions :
         res_MC[final_action] = -1
         final_action = res_MC.argmax()
