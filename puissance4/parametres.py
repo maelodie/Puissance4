@@ -3,9 +3,12 @@ NB_LIGNES = 6
 PUISSANCE = 4
 ID_JOUEUR1 = 1
 ID_JOUEUR2 = -1
-N = 5
+N = 20      #nb parties aléatoires pour Monte-carlo
 
 def quadruplets_colonnes(x, y, puissance, my_list):
+    """"
+    Calcule l'ensemble des quadruplets en colonnes gagnants de Puissance 4
+    """
     for k in range(x) :
         for j in range(y - puissance + 1):  
             quadruple = set()
@@ -14,6 +17,9 @@ def quadruplets_colonnes(x, y, puissance, my_list):
             my_list.append(quadruple)
 
 def quadruplets_lignes(x, y, puissance, my_list):
+    """"
+    Calcule l'ensemble des quadruplets en lignes gagnants de Puissance 4
+    """
     for j in range(y) :
         for k in range(x - puissance + 1):  
             quadruple = set()
@@ -22,6 +28,9 @@ def quadruplets_lignes(x, y, puissance, my_list):
             my_list.append(quadruple)
         
 def quadruplets_diagonales_droit(x, y, puissance, my_list) :
+    """"
+    Calcule l'ensemble des quadruplets diagonales droites gagnants de Puissance 4
+    """
     for i in range(x) :
         for j in range(y):
             quadruple= set()
@@ -31,6 +40,9 @@ def quadruplets_diagonales_droit(x, y, puissance, my_list) :
                 my_list.append(quadruple)
 
 def quadruplets_diagonales_gauche(x, y, puissance, my_list):
+    """"
+    Calcule l'ensemble des quadruplets diagonales gauchees gagnants de Puissance 4
+    """
     for i in range(x):
         for j in range(y):
             quadruple = set()
@@ -40,6 +52,9 @@ def quadruplets_diagonales_gauche(x, y, puissance, my_list):
                 my_list.append(quadruple)
     
 def quad_list(x, y, puissance) :
+    """"
+    Renvoie la liste de tous les quadruplets gagnants de Puissance 4 avec un plateau de taille X x Y
+    """
     my_list=[]
     quadruplets_lignes(x,y,puissance,my_list)
     quadruplets_colonnes(x,y,puissance,my_list)
