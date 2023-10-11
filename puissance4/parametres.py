@@ -3,7 +3,7 @@ NB_LIGNES = 6
 PUISSANCE = 4
 ID_JOUEUR1 = 1
 ID_JOUEUR2 = -1
-N = 20      #nb parties aléatoires pour Monte-carlo
+N = 50      #nb parties aléatoires pour Monte-carlo
 
 def quadruplets_colonnes(x, y, puissance, my_list):
     """"
