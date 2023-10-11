@@ -5,7 +5,7 @@ from math import sqrt, log
 # Variables globales
 N = 10
 T = 3000
-T_greedy = 400
+T_greedy = 100
 greedy_call_count = 0
 greedy_max_ind = 0
 ucb_call_count = 0
@@ -13,7 +13,8 @@ T_ucb = 1000
 
 
 # Liste des rendements 
-rendements = [random.uniform(0, 1) for i in range(N)]
+# rendements = [random.uniform(0, 1) for i in range(N)]
+rendements = [0.22, 0.51, 0.16, 0.75, 0.69, 0.97, 0.01, 0.98, 0.28, 0.46]
 
 def tirage_bernouilli(rendements, choix):
     """
@@ -102,7 +103,7 @@ def simulate(recomp_estimees, count, count_victory, strategie, T):
 count_victory = [0] * N
 recomp_estimees = [0] * N
 count = [0] * N
-recomp_estimees, count, count_victory = simulate(recomp_estimees, count, count_victory, UCB, T)
+recomp_estimees, count, count_victory = simulate(recomp_estimees, count, count_victory, greedy, T)
 
 print("count_victory result : ")
 print(count_victory)
