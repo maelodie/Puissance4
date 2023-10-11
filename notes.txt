@@ -1,2 +1,0 @@
-- Améliorer la complexité de la fonction quadruplets_possibles en réduisant 
-le nombre de boucles utilisées et en compactant la fonction
