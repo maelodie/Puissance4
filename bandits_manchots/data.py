@@ -1,10 +1,15 @@
 import matplotlib.pyplot as plt
 import numpy as np
-from settings import *
+from config import *
 from algo import *
 
 def experience(rend, strategie):
+    """
+    Cette fonction permet d'afficher les historigrammes comparant les rendements réels et les rendements estimés par la stratégie
+    en paramètre
 
+    Puis la contion compare le nombre d'essais contre le nombre de victoire
+    """
     _, recomp_estimees, count, count_victory, _ = simulate(rend, strategie)
     
     #Tracage des graphes de comparaison rendements vs recompenses estimees
@@ -30,6 +35,9 @@ def experience(rend, strategie):
 
    
 def regrets_gains(rend):
+    """
+    Cette fonction trace les courbes de regret de chaque fonction et les affiches sur un seul graphe
+    """
     _, _, _, _, regret_tab_aleatoire = simulate(rend, aleatoire)
     _, _, _, _, regret_tab_greedy = simulate(rend, greedy)
     _, _, _, _, regret_tab_epsilon= simulate(rend, epsilon_greedy)

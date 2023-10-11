@@ -1,6 +1,6 @@
 import random 
 import numpy as np
-from settings import *
+from config import *
 from math import sqrt, log
 
 def tirage_bernouilli(rendements, choix):
@@ -24,6 +24,10 @@ def aleatoire(recomp_estimees, count, count_victory):
     return a
 
 def greedy(recomp_estimees, count, count_victory):
+    """
+    Cet algorithme effectue T_greedy fois une exploration aléatoire sur les rendements
+    Puis, il choisit constamment la valeur maximale trouvée après ces itérations
+    """
     global greedy_call_count
     global  greedy_max_ind
     
@@ -40,7 +44,12 @@ def greedy(recomp_estimees, count, count_victory):
     return greedy_max_ind
 
 def epsilon_greedy(recomp_estimees, count, count_victory):
-    #note: un epsilon élevé encourage à plus d'exploration, un epsilon faible encourage à plus d'exploitation
+    """
+    Cet algorithme utilise les stratégie greedy et aléatoire:
+    epsilon = probabilité d'appeler la fonction aléatoire
+    1 - epsilon = probabilité d'appeler la fonction greedy
+    un epsilon élevé encourage à plus d'exploration, un epsilon faible encourage à plus d'exploitation
+    """ 
     
     a = 0 
     #si un nombre aléatoire < epsilon on applique aleatoire, sinon on applique greedy
@@ -52,6 +61,10 @@ def epsilon_greedy(recomp_estimees, count, count_victory):
     return a
 
 def UCB(recomp_estimees, count, count_victory):
+    """
+    Cette algorithme utilise un terme qui s'adapte selon le contexte du jeu et le nombre d'itérations
+    le choix : [mû[i] + sqrt((2 * log(t + 1) / count[i])) for i in range(N)]
+    """
     global ucb_call_count 
 
     if ucb_call_count < T_ucb :  #jouer qq coups pour ne pas avoir des valeurs nulles
@@ -67,6 +80,11 @@ def UCB(recomp_estimees, count, count_victory):
     return a
 
 def simulate(rendements, strategie):
+    """
+    La fonction simulate permet d'effectuer un certain nombre de fois la fonction mise en paramètres sur les rendements en argument
+    """
+
+    #Initialisation des variables utilisées
     gain = 0
     recomp_estimees = [0] * N
     count = [0] * N
@@ -91,7 +109,6 @@ def simulate(rendements, strategie):
             count_victory[a] += 1
             gain += 1
     
-
    #reset all global variables
     global greedy_call_count
     global greedy_max_ind
@@ -101,13 +118,12 @@ def simulate(rendements, strategie):
     ucb_call_count = 0
 
     recomp_estimees = [a / b if b != 0 else 0 for a, b in zip(count_victory, count)]
-
-    print("recompenses estimees", recomp_estimees)
-    print("count", count)
-    print("count_victory", count_victory)
     return gain, recomp_estimees, count, count_victory, regret
 
 def calcul_gmax(rend, times):
+    """
+    Cette fonction permet de calculer le gain maximal estimé pour un tableau en utilisant son rendement maximal
+    """
     index_max = rend.index(max(rend))
     gain_max = 0
     for i in range(times):

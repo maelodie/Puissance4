@@ -2,15 +2,18 @@
 au cours du jeu du bandits-manchots"""
 
 import random 
-# Variables globales
+
+# Configuration
 N = 10 #Nombre de leviers
 T = 3000 #Nombre d'essais
 T_greedy = 1000 #Nombre de tours pendant lesquels on explore
+T_ucb = 1500 #nombre de coups joués en aléatoire pendant ucb
+epsilon = 0.5
+
+#Ne pas changer ces paramètres
 greedy_call_count = 0 #Nombre d'appels à greedy
 greedy_max_ind = 0 #index maximal de greedy
 ucb_call_count = 0 #nombre d'appels à ucb
-T_ucb = 1500 #nombre de coups joués en aléatoire pendant ucb
-epsilon = 0.5
 
 #Listes de rendements sur lesquels on va mener l'expérience
 rendements = [(random.uniform(0, 1)) for i in range(N)]
